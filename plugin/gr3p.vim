@@ -1,9 +1,11 @@
 let s:search_locations = []
 
+" add current position to g:search_locations
 fun AddSearch()
     call add(s:search_locations, [expand('%:p'), getpos('.')])
 endfun
 
+" perform call and go to first result if found, open location list if multiple are found
 fun DoSearch(grepcall)
     let l:findings = split(system(a:grepcall), '\n')
     if len(l:findings) > 0
@@ -89,6 +91,8 @@ fun LListOpen()
     endif
 endfun
 
+" close location list if open
+" open location list if closed
 fun ToggleLList()
    if LListOpen()
         lclose
