@@ -1,5 +1,5 @@
 # vimgitgrep
-plugin to add some custom grep commands for bouncing around a git repo in vim. the idea is to be able to quickly dig into functions and definitions and return back to where you were, making code discovery easier. search for a function definition, look for the definition of a function that it uses, then pop back up, then dig down again into another function it uses, then pop back twice and you're back to where you started.
+plugin to add some custom grep commands for bouncing around a git repo in vim. the idea is to be able to quickly dig into functions and definitions and return back to where you were, making code discovery easier kindof like ctags does but without the index. search for a function definition, look for the definition of a function that it uses, then pop back up, then dig down again into another function it uses, then pop back twice and you're back to where you started.
 
 # install
 use [vundle](https://github.com/gmarik/Vundle.vim)
@@ -26,7 +26,7 @@ nmap <silent> <A-Right> :call GitGr3p(1)<cr>
 perform a fairly standard `git grep` of word under cursor setting vim's current working directory to the repo root.
 
 ##### `GitGr3p(1)`
-perform a `git grep` looking for Python definitions of word under cursor and ignoring the rest and setting vim's current working directory to the repo root.
+perform a `git grep` looking for Python definitions of word under cursor and ignoring the rest and setting vim's current working directory to the repo root. this is the ctags style functionality.
 
 Example matches with `flibbertigibbet` under the cursor.
 ```
