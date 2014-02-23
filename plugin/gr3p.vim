@@ -10,7 +10,7 @@ fun DoSearch(grepcall)
     let l:findings = split(system(a:grepcall), '\n')
     if len(l:findings) > 0
         call AddSearch()
-        lexpr l:findings
+        silent lexpr l:findings
         if len(l:findings) > 1
             lopen
             wincmd p
