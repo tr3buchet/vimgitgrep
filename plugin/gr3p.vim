@@ -38,7 +38,7 @@ fun GitGr3p(def)
     else
         let l:grepfor = l:ecw
     endif
-    let l:grepcall = 'git grep -E --full-name --line-number ' . l:grepfor
+    let l:grepcall = 'git grep -E --full-name --line-number ' . l:grepfor . ' -- `git ls-files | grep -v "' . g:gitgreppathexcludes . '"'
     execute "cd" l:gitroot
     call DoSearch(l:grepcall)
 endfun
@@ -48,7 +48,7 @@ endfun
 fun GoBackSearch()
     if len(s:search_locations) > 0
         let l:llactive = LListActive()
-        if l:llactive    
+        if l:llactive
             " location list is active, switch to regular window before starting
             wincmd p
         endif
