@@ -39,8 +39,9 @@ fun GitGr3p(def)
         let l:grepfor = l:ecw
     endif
     let l:grepcall = 'git grep -E --full-name --line-number ' . l:grepfor
-    if g:gitgreppathexcludes
+    if exists("g:gitgreppathexcludes")
         let l:grepcall = l:grepcall . ' -- `git ls-files | grep -v "' . g:gitgreppathexcludes . '"`'
+    endif
     execute "cd" l:gitroot
     call DoSearch(l:grepcall)
 endfun
