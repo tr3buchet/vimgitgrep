@@ -5,11 +5,33 @@ fun AddSearch()
     call add(s:search_locations, [expand('%:p'), getpos('.')])
 endfun
 
+" if current buffer is dirty, set it to be hidden, else deleted
+fun Setbufhidden()
+    if getbufvar('%', '&modified') == 1
+        setlocal bufhidden=hide
+    else
+        setlocal bufhidden=delete
+    endif
+endfun
+
+" move to next result possibly hiding current buffer
+fun Nextresult()
+    call Setbufhidden()
+    lnext
+endfun
+
+" move to previous result possibly hiding current buffer
+fun Previousresult()
+    call Setbufhidden()
+    lprevious
+endfun
+
 " perform call and go to first result if found, open location list if multiple are found
 fun DoSearch(grepcall)
     let l:findings = split(system(a:grepcall), '\n')
     if len(l:findings) > 0
         call AddSearch()
+        call Setbufhidden()
         silent lexpr l:findings
         if len(l:findings) > 1
             lopen
@@ -24,8 +46,8 @@ fun Gr3p()
     call DoSearch(l:grepcall)
 endfun
 
-" if def git grep for class def or = definition of word under cursor
-" if not def git grep for word under cursor
+" if def, find definition for word under cursor
+" if not def, find all occurences for word under cursor
 fun GitGr3p(def)
     let l:ecw = expand('<cword>')
     let l:gitroot = system('git rev-parse --show-toplevel')
@@ -69,7 +91,10 @@ fun GoBackSearch()
         if len(s:search_locations) > 0
             " go to the location of previous search
             let s:gotofile = s:search_locations[-1][0]
-            execute "e" s:gotofile
+            if s:gotofile != expand('%:p')
+                call Setbufhidden()
+                execute "e" s:gotofile
+            endif
             call setpos('.', s:search_locations[-1][1])
         endif
     endif
