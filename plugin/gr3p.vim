@@ -56,7 +56,8 @@ fun GitGr3p(def)
         return 0
     endif
     if a:def
-        let l:grepfor = '-e "class ' . l:ecw . '\(" --or -e "' . 'def ' . l:ecw . '\(" --or -e "^(\s*|.*\.)' . l:ecw . ' = "'
+        "let l:grepfor = '-e "class ' . l:ecw . '\(" --or -e "' . 'def ' . l:ecw . '\(" --or -e "^(\s*|.*\.)' . l:ecw . ' = "'
+        let l:grepfor = '-e "(class |def )' . l:ecw . '\("  --or -e "(^|\.|\s)' . l:ecw . ' = "'
     else
         let l:grepfor = l:ecw
     endif
